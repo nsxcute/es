@@ -1,0 +1,52 @@
+foreach ($data as $key => $value) {
+            if (!empty($value['image'])) {
+                //数组中图片一维数组转字符串
+                $value['image'] = explode("/", $value['image']);
+            }
+
+            //和上一个比较不同
+            if($key < 1){
+                $data[$key]['conten'] = explode('&',strip_tags($value['content']));
+                $conten = count($data[$key]['conten']);
+            }
+            //从第二个元素开始
+            if ($key >= 1) {
+                if ($data[$key]['title'] != $data[$key - 1]['title']) {
+                    //不相同的加标签
+                    $data[$key]['title'] = '<p style="color:red">' . $data[$key]['title'] . '</p>';
+                }
+                //相似问题 转数组
+                $data[$key]['conten'] = explode("&", strip_tags($value['content']));
+                $cont = count($data[$key]['conten']);
+                $max = max($conten,$cont);
+                //比较相似问题
+                /*for ($i=0;$i<$max;$i++){
+                    dump($data[$key-1]['conten'][$i]);
+                    if(!isset($data[$key]['conten'][$i])){
+                        $data[$key-1]['conten'][$i] = '<p style="color:red">' . strip_tags($data[$key-1]['conten'][$i]) . '</p>';
+                    }else{
+                        if($data[$key]['conten'][$i] != $data[$key-1]['conten'][$i]){
+                            $data[$key]['conten'][] = '<p style="color:red">' . strip_tags($data[$key]['conten'][$i]) . '</p>';
+//                            unset($data[$key]['conten'][$i]);
+                        }
+                    }
+
+                    if(!isset($data[$key-1]['conten'][$i])){
+                        $data[$key]['conten'][] = '<p style="color:red">' . strip_tags($data[$key]['conten'][$i]) . '</p>';
+                        unset($data[$key]['conten'][$i]);
+                        continue;
+                    }else{
+                        if(!isset($data[$key]['conten'][$i])){
+                            $data[$key-1]['conten'][$i] = '<p style="color:red">' . strip_tags($data[$key-1]['conten'][$i]) . '</p>';
+                        }else{
+                            if($data[$key]['conten'][$i] != $data[$key-1]['conten'][$i]){
+                                $data[$key]['conten'][] = '<p style="color:red">' . strip_tags($data[$key]['conten'][$i]) . '</p>';
+                                unset($data[$key]['conten'][$i]);
+                            }
+                        }
+
+                    }
+                }
+                $data[$key]['conten'] = array_values($data[$key]['conten']);*/
+            }
+        }
